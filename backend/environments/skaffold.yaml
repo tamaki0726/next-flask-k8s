@@ -1,0 +1,13 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: next-flask-k8s
+build:
+  artifacts:
+    - image: next-flask-k8s
+      context: ../app/backend
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+    useBuildkite: true
