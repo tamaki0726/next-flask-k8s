@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-init-script
+data:
+  init-mongo.js: |
+    db = db.getSiblingDB('mydatabase'); // 'mydatabase'という名前のデータベースに接続
+
+    db.createCollection('users'); // コレクションを作成
+
+    db.users.insertMany([
+      { name: 'Alice', age: 25, email: 'alice@example.com' },
+      { name: 'Bob', age: 30, email: 'bob@example.com' },
+      { name: 'Charlie', age: 35, email: 'charlie@example.com' }
+    ]); // 初期データを挿入
