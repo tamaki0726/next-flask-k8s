@@ -1,5 +1,6 @@
 # app/rest/user_controller.py
 from flask import Blueprint, request, jsonify
+from bson.json_util import dumps
 from app.gateway.mongo_user_gateway import MongoUserGateway
 from app.usecase.user_usecase import UserUseCase
 from app.config import Config
@@ -19,7 +20,12 @@ def create_user():
 @user_bp.route('/v1/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     user = user_usecase.get_user(user_id)
-    return jsonify(user), 200
+    return dumps(user), 200
+
+@user_bp.route('/v1/users', methods=['GET'])
+def get_users():
+    users = user_usecase.get_users()
+    return dumps(users), 200
 
 @user_bp.route('/v1/users/<user_id>', methods=['PUT'])
 def update_user(user_id):

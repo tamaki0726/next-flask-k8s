@@ -8,6 +8,10 @@ class UserRepository(ABC):
         pass
 
     @abstractmethod
+    def all_read(self):
+        pass
+
+    @abstractmethod
     def read(self, user_id):
         pass
 

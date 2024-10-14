@@ -9,6 +9,9 @@ class UserUseCase:
     def create_user(self, name: str, email: str):
         user = User(name, email)
         return self.user_repository.create(user)
+    
+    def get_users(self):
+        return self.user_repository.all_read()
 
     def get_user(self, user_id):
         return self.user_repository.read(user_id)
