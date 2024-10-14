@@ -24,3 +24,6 @@ class MongoUserGateway(UserRepository):
 
     def delete(self, user_id):
         self.collection.delete_one({"_id": ObjectId(user_id)})
+    
+    def close(self):
+        self.mongo_driver.close()
