@@ -1,6 +1,5 @@
 # app/rest/user_controller.py
 from flask import Blueprint, request, jsonify
-from bson.json_util import dumps
 from app.gateway.redis_cache_gateway import RedisCacheGateway
 from app.usecase.cache_usecase import CacheUseCase
 from app.config import Config
