@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: next-flask-k8s-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: next-flask-k8s-api
+  template:
+    metadata:
+      labels:
+        app: next-flask-k8s-api
+    spec:
+      containers:
+      - name: next-flask-k8s-api
+        image: next-flask-k8s-api:latest  # 先ほどビルドしたDockerイメージ
+        ports:
+        - containerPort: 5600
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
+        env:
+          - name: MONGO_URI
+            value: "mongodb://root:root@mongo-service.default.svc.cluster.local:27017/mydatabase?authSource=admin"

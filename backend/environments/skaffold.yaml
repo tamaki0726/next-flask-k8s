@@ -5,9 +5,9 @@ metadata:
 build:
   artifacts:
     - image: next-flask-k8s-api
-      context: ../app
+      context: ../
       docker:
-        dockerfile: .app/Dockerfile
+        dockerfile: Dockerfile
   local:
     push: false
     useBuildkit: true
@@ -15,16 +15,28 @@ manifests:
   helm:
     releases:
       - name: next-flask-k8s-api
-        chartPath: ./app/helm/deployment
+        chartPath: app/helm/deployment
 profiles:
   - name: local
-    activation:
-      - command: dev
+    # activation:
+    #   - command: dev
     patches:
       - op: remove
         path: /build
       - op: remove
         path: /manifests/helm/releases/0
+      - op: add
+        path: /manifests/helm/releases/-
+        value:
+          name: mongo-db
+          chartPath: ./db/helm/deployment
+      - op: add
+        path: /manifests/helm/releases/-
+        value:
+          name: mongo-db-cm
+          chartPath: ./db/helm/config-map
+  - name: integration
+    patches:
       - op: add
         path: /manifests/helm/releases/-
         value:
