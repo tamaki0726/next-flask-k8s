@@ -35,6 +35,11 @@ profiles:
         value:
           name: mongo-db-cm
           chartPath: ./db/helm/config-map
+      - op: add
+        path: /manifests/helm/releases/-
+        value:
+          name: redis
+          chartPath: ./redis/helm/deployment
   - name: integration
     patches:
       - op: add
@@ -47,3 +52,8 @@ profiles:
         value:
           name: mongo-db-cm
           chartPath: ./db/helm/config-map
+      - op: add
+        path: /manifests/helm/releases/-
+        value:
+          name: redis
+          chartPath: ./redis/helm/deployment
