@@ -1,4 +1,4 @@
-# app/gateway/mongo_user_gateway.py
+# app/gateway/redis_cache_gateway.py
 from app.port.cache_repository import CacheRepository
 from app.domain.cache import Cache
 from app.driver.redis_driver import RedisDriver

@@ -27,3 +27,5 @@ spec:
         env:
           - name: MONGO_URI
             value: "mongodb://root:root@mongo-service.default.svc.cluster.local:27017/mydatabase?authSource=admin"
+          - name: REDIS_URI
+            value: "redis-service.default.svc.cluster.local"
