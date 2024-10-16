@@ -7,7 +7,7 @@ from app.config import Config
 
 cache_bp = Blueprint('cache', __name__)
 
-# MongoDBゲートウェイとユースケースの初期化
+# Redisゲートウェイとユースケースの初期化
 cache_gateway = RedisCacheGateway(Config.REDIS_URI)
 cache_usecase = CacheUseCase(cache_gateway)
 
