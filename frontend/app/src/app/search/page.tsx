@@ -17,8 +17,9 @@ const SearchPage = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch('/v1/contents');
+                console.log(response);
                 // const result = await response.json();
-                const result = testContents
+                const result = testContents;
 
                 setData(result);
             } catch (error) {
