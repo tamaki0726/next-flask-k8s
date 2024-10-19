@@ -1,0 +1,18 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: next-flask-k8s-web
+build:
+  artifacts:
+    - image: next-flask-k8s-web
+      context: ../app
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+    useBuildkit: true
+manifests:
+  helm:
+    releases:
+      - name: next-flask-k8s-api
+        chartPath: helm/deployment
