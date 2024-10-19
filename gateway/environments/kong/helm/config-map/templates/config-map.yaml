@@ -12,3 +12,19 @@ data:
           - name: api-route
             paths:
               - /api/*
+            plugins:
+              - name: cors
+                config:
+                  methods: 
+                    - GET
+                    - POST
+                    - OPTIONS
+                  headers: 
+                    - Accept
+                    - Authorization
+                    - Content-Type
+                  origins: 
+                    - http://localhost:3000  # 許可するオリジン
+                  exposed_headers: 
+                    - X-Custom-Header  # 必要な場合
+                  max_age: 3600

@@ -7,7 +7,7 @@ build:
     - image: next-flask-k8s-api
       context: ../
       docker:
-        dockerfile: Dockerfile
+        dockerfile: environments/Dockerfile
   local:
     push: false
     useBuildkit: true

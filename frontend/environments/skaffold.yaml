@@ -5,9 +5,9 @@ metadata:
 build:
   artifacts:
     - image: next-flask-k8s-web
-      context: ../app
+      context: ../
       docker:
-        dockerfile: Dockerfile
+        dockerfile: environments/Dockerfile
   local:
     push: false
     useBuildkit: true

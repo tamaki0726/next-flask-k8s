@@ -9,4 +9,4 @@ spec:
     - protocol: TCP
       port: 3000  # 外部アクセス用のポート
       targetPort: 3000  # コンテナ内のポート
-  type: LoadBalancer  # 外部からアクセス可能にする
+  type: ClusterIP
