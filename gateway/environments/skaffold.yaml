@@ -1,0 +1,11 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: kong
+manifests:
+  helm:
+    releases:
+      - name: kong
+        chartPath: kong/helm/deployment
+      - name: kong-cm
+        chartPath: kong/helm/config-map

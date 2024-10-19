@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-config
+data:
+  kong.yaml: |
+    _format_version: "1.1"  # または適切なバージョンを指定
+    services:
+      - name: next-flask-k8s-api
+        url: http://next-flask-k8s-api-service.default.svc.cluster.local:5600/v1
+        routes:
+          - name: api-route
+            paths:
+              - /api/*
