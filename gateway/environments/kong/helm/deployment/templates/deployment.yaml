@@ -15,6 +15,13 @@ spec:
       containers:
         - name: kong
           image: kong:latest  # 公式イメージを指定
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
           env:
             - name: KONG_DATABASE
               value: "off"

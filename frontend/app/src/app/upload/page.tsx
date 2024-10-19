@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { kongGatewayEndpoint } from '../config';
 
 const UploadPage = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -25,7 +26,7 @@ const UploadPage = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('/api/upload', {
+            const response = await fetch(`${kongGatewayEndpoint}/api/upload`, {
                 method: 'POST',
                 body: formData,
             });

@@ -4,8 +4,9 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { Content } from '../types/content';
 import Modal from '../components/Modal';
-import { testContents } from '../data/testContent';
+// import { testContents } from '../data/testContent';
 import Link from 'next/link';
+import { kongGatewayEndpoint } from '../config';
 // import Modal from '@components/Modal';
 
 const SearchPage = () => {
@@ -16,10 +17,9 @@ const SearchPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/v1/contents');
-                console.log(response);
-                // const result = await response.json();
-                const result = testContents;
+                const response = await fetch(`${kongGatewayEndpoint}/api/contents`);
+                const result = await response.json();
+                // const result = testContents;
 
                 setData(result);
             } catch (error) {

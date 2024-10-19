@@ -5,11 +5,11 @@ FROM node:23.0.0-alpine AS builder
 WORKDIR /app
 
 # 依存関係のインストール (package.json, package-lock.jsonを使用)
-COPY package*.json ./
+COPY app/package*.json ./
 RUN npm install
 
 # Next.jsのコードをコピー
-COPY . .
+COPY app/ .
 
 # Next.jsをビルド
 RUN npm run build
