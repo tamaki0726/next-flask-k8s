@@ -1,0 +1,3 @@
+apiVersion: v2
+name: kong-cm
+version: 1.0.0

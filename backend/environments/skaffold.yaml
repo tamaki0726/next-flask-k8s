@@ -40,6 +40,7 @@ profiles:
         value:
           name: redis
           chartPath: ./redis/helm/deployment
+
   - name: integration
     patches:
       - op: add
