@@ -3,15 +3,23 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { kongGatewayEndpoint } from '../config';
+import { Content } from '../types/content';
+import Modal from '../components/Modal';
 
 const UploadPage = () => {
     const [file, setFile] = useState<File | null>(null);
     const [message, setMessage] = useState<string>('');
+    const [data, setData] = useState<Content | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setFile(e.target.files[0])
         }
+    };
+
+    const handleRowClick = () => {
+        setIsModalOpen(true);
     };
 
     const handleUpload = async (e: React.FormEvent) => {
@@ -30,9 +38,10 @@ const UploadPage = () => {
                 method: 'POST',
                 body: formData,
             });
-
             if (response.ok) {
+                const res = await response.json();
                 setMessage('ファイルをアップロードしました！');
+                setData(res.data);
             } else {
                 setMessage('アップロードに失敗しました...');
             }
@@ -51,6 +60,15 @@ const UploadPage = () => {
                 </button>
             </form>
             {message && <p style={styles.message}>{message}</p>}
+
+            {data && (
+                <button style={styles.button} onClick={() => handleRowClick()}>抽出結果を見る</button>
+            )}
+
+            {isModalOpen && data && (
+                <Modal content={data} onClose={() => setIsModalOpen(false)} />
+            )}
+
             {/* Searchへの遷移ボタン */}
             <Link href="/search">
                 <button style={styles.linkButton}>検索画面へ</button>

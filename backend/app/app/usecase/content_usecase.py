@@ -1,6 +1,7 @@
 # app/usecase/content_usecase.py
+from flask import jsonify
 from app.port.content_repository import ContentRepository
-from app.domain.content import Content
+import pandas as pd
 
 class ContentUseCase:
     def __init__(self, content_repository: ContentRepository):
@@ -8,3 +9,4 @@ class ContentUseCase:
     
     def get_contents(self):
         return self.content_repository.all_read()
+    
