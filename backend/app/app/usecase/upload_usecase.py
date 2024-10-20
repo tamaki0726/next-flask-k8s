@@ -14,7 +14,8 @@ class UploadUseCase:
             df = pd.read_excel(file)
             prompt = create_prompt(df)
             response = self.content_repository.extract(prompt)
-            return {'data': response}
+            response_json = json.loads(response)
+            return response_json
         except Exception as e:
             return {'error': str(e)}
         
@@ -25,5 +26,5 @@ def create_prompt(df):
         document_entries.append(", ".join([f"{col}: {row[col]}" for col in df.columns]))
 
     # prompt = f"以下の表形式のデータに基づいて、どのような種類のドキュメントか推定してください。ただ回答は特殊文字を使わず、単純な文字列のみ使用してください。:\n\n" + "\n".join(document_entries)
-    prompt = f"以下の表形式のデータから下記のファイルからコンテンツ名、ユーザー名、作成日（本日の日付）、部品名、価格、数量を抽出してください。アウトプット形式は下記の通りとし、取得できない項目があれば、値を空としてください。補足や説明は不要なため、アウトプット形式は例として添付したsonの型に必ずあわせてください。 {{contentsName: 'コンテンツA',userName: 'テスト太郎',createdAt: '2024-10-19',details: [{{ detailName: '部品1', amount: 2000, count: 2 }},{{ detailName: '部品2', amount: 3000, count: 1 }}]}},:\n\n" + "\n".join(document_entries)
+    prompt = f"以下の表形式のデータから下記のファイルからコンテンツ名(contentsName)、ユーザー名(userName)、作成日（本日の日付）(createdAt)、部品名(detailName)、価格(amount)、数量(count)を抽出してください。アウトプット形式は下記の通りとし、取得できない項目があれば値を空としてください。補足や説明は不要なため、アウトプット形式は例として添付したjsonの型に必ずあわせてください。また```jsonのような接頭句も不要です。 {{\"data\": {{\"contentsName\": \"コンテンツA\",\"userName\": \"テスト太郎\",\"createdAt\": \"2024-10-19\",\"details\": [{{ \"detailName\": \"部品1\", \"amount\": 2000, \"count\": 2 }},{{ \"detailName\": \"部品2\", \"amount\": 3000, \"count\": 1 }}]}}}},:\n\n" + "\n".join(document_entries)
     return prompt
