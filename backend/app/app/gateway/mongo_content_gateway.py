@@ -13,3 +13,4 @@ class MongoContentGateway(ContentRepository):
     
     def close(self):
         self.mongo_driver.close()
+        self.openai_driver.close()

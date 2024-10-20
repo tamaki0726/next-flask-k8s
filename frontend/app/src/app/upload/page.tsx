@@ -7,6 +7,7 @@ import { kongGatewayEndpoint } from '../config';
 const UploadPage = () => {
     const [file, setFile] = useState<File | null>(null);
     const [message, setMessage] = useState<string>('');
+    const [data, setData] = useState<string>('');
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -30,9 +31,10 @@ const UploadPage = () => {
                 method: 'POST',
                 body: formData,
             });
-
             if (response.ok) {
+                const res = await response.json();
                 setMessage('ファイルをアップロードしました！');
+                setData(res.data);
             } else {
                 setMessage('アップロードに失敗しました...');
             }
@@ -51,6 +53,7 @@ const UploadPage = () => {
                 </button>
             </form>
             {message && <p style={styles.message}>{message}</p>}
+            {data && <p style={styles.message}>{data}</p>}
             {/* Searchへの遷移ボタン */}
             <Link href="/search">
                 <button style={styles.linkButton}>検索画面へ</button>

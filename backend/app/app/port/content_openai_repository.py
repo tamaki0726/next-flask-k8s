@@ -2,7 +2,8 @@
 from abc import ABC, abstractmethod
 from app.domain.content import Content
 
-class ContentRepository(ABC):
+class ContentOpenAiRepository(ABC):
     @abstractmethod
-    def all_read(self):
+    def extract(self, prompt):
         pass
+
