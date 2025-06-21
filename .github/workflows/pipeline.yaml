@@ -32,17 +32,9 @@ jobs:
           cd frontend/app
           npm run build
 
-      - name: Get Amplify App Id
-        id: get_app_id
-        run: |
-          APP_ID=$(aws amplify list-apps \
-            --query "apps[?name=='MyApp'].appId" \
-            --output text)
-          echo "app_id=$APP_ID" >> $GITHUB_OUTPUT
-
       - name: Start Amplify deployment
         run: |
           aws amplify start-deployment \
-            --app-id ${{ steps.get_app_id.outputs.app_id }} \
+            --app-id dq4btzthj3t72 \
             --branch-name main \
             --source-dir frontend/app/.next
