@@ -1,0 +1,48 @@
+name: Deploy Next.js to Amplify
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::<accountId>:role/GithubDeployRole
+          aws-region: ap-northeast-1
+
+      - name: Install dependencies
+        run: |
+          cd frontend/app
+          npm ci
+
+      - name: Build Next.js app
+        run: |
+          cd frontend/app
+          npm run build
+
+      - name: Get Amplify App Id
+        id: get_app_id
+        run: |
+          APP_ID=$(aws amplify list-apps \
+            --query "apps[?name=='MyApp'].appId" \
+            --output text)
+          echo "app_id=$APP_ID" >> $GITHUB_OUTPUT
+
+      - name: Start Amplify deployment
+        run: |
+          aws amplify start-deployment \
+            --app-id ${{ steps.get_app_id.outputs.app_id }} \
+            --branch-name main \
+            --source-dir frontend/app/.next
